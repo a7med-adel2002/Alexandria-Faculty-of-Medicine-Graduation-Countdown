@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alexandria Faculty of Medicine Graduation Countdown</title>
+    <link rel="icon" href="graduate.png" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #0096c7; /* Light blue */
+        --secondary-color: #00b4d8; /* Teal */
+        --accent-color: #48cae4; /* Soft blue */
+        --text-color: #023e8a; /* Dark blue */
+        --light-color: #ffffff; /* White */
+        --background-color: #f0f8ff; /* Very light blue */
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1" viewBox="0 0 100 100"><path fill="%230096c7" d="M50 5L50 95M5 50L95 50M25 25L75 75M75 25L25 75"/></svg>');
+        background-size: 120px 120px;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        background-color: var(--light-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 150, 199, 0.2);
+        border-top: 5px solid var(--primary-color);
+      }
+
+      .header {
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+      }
+
+      .school-name {
+        font-family: "Montserrat", sans-serif;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .icons {
+        font-size: 2rem;
+        margin: 1rem 0;
+        color: var(--primary-color);
+      }
+
+      .icons i {
+        margin: 0 10px;
+      }
+
+      .description {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+        opacity: 0.8;
+      }
+
+      .countdown-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .countdown-segment {
+        min-width: 120px;
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        border-radius: 10px;
+        padding: 1rem 0.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .countdown-segment:hover {
+        transform: translateY(-5px);
+      }
+
+      .time {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .label {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+      }
+
+      .celebration {
+        display: none;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin: 2rem 0;
+        padding: 2rem;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 150, 199, 0.3);
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      .quote-container {
+        margin: 2.5rem auto 1.5rem;
+        max-width: 90%;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        padding: 0.5rem;
+      }
+
+      .quote {
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 1.25rem;
+        color: var(--text-color);
+        font-style: italic;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+        position: relative;
+        padding: 0 1.5rem;
+      }
+
+      .quote::before,
+      .quote::after {
+        font-family: Georgia, serif;
+        font-size: 2rem;
+        color: var(--primary-color);
+        opacity: 0.7;
+        position: absolute;
+      }
+
+      .quote::before {
+        content: ""
+          ";
+        left: -0.5rem;
+        top: -0.5rem;
+      }
+      
+      .quote::after {
+        content: "
+          "";
+        right: -0.5rem;
+        bottom: -1.2rem;
+      }
+
+      .quote-author {
+        font-family: "Montserrat", sans-serif;
+        font-size: 0.9rem;
+        text-align: right;
+        color: var(--secondary-color);
+        margin-top: 0.75rem;
+        margin-right: 2rem;
+        font-weight: 500;
+      }
+
+      .graduation-message {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .fade-in {
+        opacity: 1;
+      }
+
+      .copyright {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        opacity: 0.7;
+        font-style: italic;
+      }
+
+      .copyright a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      .copyright a:hover {
+        color: var(--accent-color);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .footer {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      @media screen and (max-width: 768px) {
+        .countdown-container {
+          gap: 1rem;
+        }
+
+        .countdown-segment {
+          min-width: 100px;
+          padding: 0.8rem 0.3rem;
+        }
+
+        .time {
+          font-size: 2.2rem;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .celebration {
+          font-size: 1.8rem;
+        }
+
+        .description {
+          font-size: 1rem;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .countdown-segment {
+          min-width: 70px;
+          padding: 0.6rem 0.2rem;
+        }
+
+        .time {
+          font-size: 1.8rem;
+        }
+
+        .container {
+          padding: 1.5rem;
+        }
+
+        .icons {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Alexandria Faculty of Medicine Graduation Countdown</h1>
+        <div class="icons">
+          <i class="fas fa-graduation-cap"></i>
+          <i class="fas fa-stethoscope"></i>
+        </div>
+        <p class="description">
+          The journey to becoming a doctor is almost complete!
+        </p>
+      </div>
+
+      <div class="countdown-container" id="countdown">
+        <div class="countdown-segment">
+          <div class="time" id="days">--</div>
+          <div class="label">Days</div>
+        </div>
+        <div class="countdown-segment">
+          <div class="time" id="hours">--</div>
+          <div class="label">Hours</div>
+        </div>
+        <div class="countdown-segment">
+          <div class="time" id="minutes">--</div>
+          <div class="label">Minutes</div>
+        </div>
+        <div class="countdown-segment">
+          <div class="time" id="seconds">--</div>
+          <div class="label">Seconds</div>
+        </div>
+      </div>
+
+      <div class="celebration" id="celebration">
+        Congratulations, Doctor! 🎓🩺
+      </div>
+
+      <div class="quote-container" id="quote-container">
+        <blockquote class="quote">
+          "The good physician treats the disease; the great physician treats the
+          patient who has the disease."
+        </blockquote>
+        <p class="quote-author">— Sir William Osler</p>
+      </div>
+
+      <div class="footer">
+        <p class="graduation-message" id="graduation-message">
+          December 7, 2025 @ 11:50 AM (Cairo time)
+        </p>
+        <p class="copyright">
+          © 2025
+          <a
+            href="https://www.linkedin.com/in/a7medadel2002/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Ahmed Adel</a
+          >. All rights reserved.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Target date: December 7, 2025, at 11:50 AM (Cairo time UTC+2)
+        const targetDate = new Date("2025-12-07T11:50:00+02:00").getTime();
+
+        // Fade in the graduation message and quote
+        setTimeout(() => {
+          document
+            .getElementById("graduation-message")
+            .classList.add("fade-in");
+          document.getElementById("quote-container").classList.add("fade-in");
+        }, 1000);
+
+        // Update countdown every second
+        const countdown = setInterval(updateCountdown, 1000);
+
+        // Initial call to set the values immediately
+        updateCountdown();
+
+        function updateCountdown() {
+          // Current date and time
+          const now = new Date().getTime();
+
+          // Time difference between now and the target date
+          const timeRemaining = targetDate - now;
+
+          if (timeRemaining <= 0) {
+            // It's graduation time!
+            clearInterval(countdown);
+            document.getElementById("countdown").style.display = "none";
+            document.getElementById("celebration").style.display = "block";
+            document.getElementById("quote-container").classList.add("fade-in");
+            return;
+          }
+
+          // Calculate days, hours, minutes, and seconds
+          const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          const minutes = Math.floor(
+            (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          // Update the HTML elements
+          document.getElementById("days").textContent = formatTime(days);
+          document.getElementById("hours").textContent = formatTime(hours);
+          document.getElementById("minutes").textContent = formatTime(minutes);
+          document.getElementById("seconds").textContent = formatTime(seconds);
+        }
+
+        // Add leading zero if the number is less than 10
+        function formatTime(time) {
+          return time < 10 ? `0${time}` : time;
+        }
+      });
+    </script>
+  </body>
+</html>
